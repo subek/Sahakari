@@ -1,0 +1,16 @@
+name = "Sahakari"
+description = "A customized module especially designed for Sahakari"
+package = Sahakari
+
+core = 7.x
+
+files[] = sahakari.module
+
+configure = admin/config/user-interface/menu-block
+
+; Information added by Kushal Bhakta Joshi packaging script on 2013-12-21
+version = "7.x"
+core = "7.x"
+project = "sahakari"
+datestamp = "1328286646"
+

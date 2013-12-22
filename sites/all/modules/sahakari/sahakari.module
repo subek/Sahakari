@@ -1,0 +1,53 @@
+<?php
+/**
+ * @file
+ * Provides configurable blocks of menu items.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function sahakari_menu() {
+  $items['admin/clear-all-caches'] = array(
+    'title' => 'Flush All Caches',
+    'description' => 'Flushes all the caches',
+    'page callback' => 'clear_cache',
+    'access arguments' => array('access content'),
+    'type' => MENU_NORMAL_ITEM,
+    'file' => 'sahakari.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_enable().
+ */
+function sahakari_enable() {
+  // Check if our field is not already created.
+  if (!field_info_field('field_balance')) {
+    $field = array(
+        'field_name' => 'field_balance',
+        'type' => 'text',
+    );
+    field_create_field($field);
+
+    // Create the instance on the bundle.
+    $instance = array(
+        'field_name' => 'field_balance',
+        'entity_type' => 'user',
+        'label' => 'Balance',
+        'bundle' => 'user',
+        // If you don't set the "required" property then the field wont be required by default.
+        'required' => TRUE,
+        'settings' => array(
+           // Here you inform either or not you want this field showing up on the registration form.
+            'user_register_form' => 1,
+        ),
+        'widget' => array(
+            'type' => 'textfield',
+            'weight' => '1',
+        ),
+    );
+    field_create_instance($instance);
+  }
+}
